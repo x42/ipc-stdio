@@ -116,6 +116,11 @@ main (int argc, char** argv)
 	key_t key_rx = ftok (qname, 'a');
 	key_t key_tx = ftok (qname, 'b');
 
+	if (key_rx == -1 || key_tx == -1) {
+		fprintf (stderr, "Cannot create IPC keys. Error (%d): %s\n", errno, strerror (errno));
+		return -1;
+	}
+
 	int msqrx = msgget (key_rx, 0);
 	int msqtx = msgget (key_tx, 0);
 
