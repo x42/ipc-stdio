@@ -54,17 +54,17 @@ struct IPCMsgBuf {
 static int msqtx = -1;
 static int msqrx = -1;
 
-pid_t     pid       = 0;
-int       nicelevel = 0;
-pthread_t thread_id_tt;
-bool      thread_active;
+static pid_t        pid           = 0;
+static int          nicelevel     = 0;
+static bool         thread_active = false;
+static volatile int terminated    = 0;
 
 static int pok[2];
 static int pin[2];
 static int pout[2];
 
-volatile int    terminated = 0;
-pthread_mutex_t write_lock;
+static pthread_t       thread_id_tt;
+static pthread_mutex_t write_lock;
 
 static int
 open_ipcmsg_ctrl (const char* queuename)
@@ -161,7 +161,7 @@ close_fd (int* fdx)
 	*fdx = -1;
 }
 
-size_t
+static size_t
 write_to_stdin (const void* data, size_t bytes)
 {
 	ssize_t r;
@@ -189,7 +189,7 @@ write_to_stdin (const void* data, size_t bytes)
 	return c;
 }
 
-void
+static void
 close_stdin ()
 {
 	if (pin[1] < 0) {
@@ -309,9 +309,6 @@ start (char* const* argp)
 		close_fd (&pok[0]);
 		/* child started successfully */
 
-		close_fd (&pok[0]);
-		/* child started successfully */
-
 		close_fd (&pout[1]);
 		close_fd (&pin[0]);
 
@@ -398,10 +395,7 @@ static void
 init_globals ()
 {
 	pthread_mutex_init (&write_lock, NULL);
-	thread_active = false;
-	pid           = 0;
-	pin[1]        = -1;
-	nicelevel     = 0;
+	pin[1] = -1;
 }
 
 static void
