@@ -1,0 +1,17 @@
+TODO/Ideas for server features:
+
+* option to close/ignore stderr
+* option to use a shell wrapper
+* option send a "terminate server" command from the client
+* document "use script if you need to pass options to the child process"
+* allow to daemonize server - detach from terminal..
+* option to ignore or flush output if no client is connected
+* expose `nicelevel` as option
+
+Client:
+* use select/poll + read, chunk long messages ?
+
+Client/Server:
+* use a better `ftok` default path
+
+deprecate it and post instructions how to use screen or tmux instead :)
