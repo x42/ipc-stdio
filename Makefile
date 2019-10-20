@@ -43,6 +43,10 @@ man: ipc-client ipc-server
 	help2man -N -n 'IPC STDIO SERVER' -o ipc-client.1 ./ipc-client
 	help2man -N -n 'IPC STDIO CLIENT' -o ipc-server.1 ./ipc-server
 
+install: install-bin install-man
+
+uninstall: uninstall-bin uninstall-man
+
 clean:
 	rm -f ipc-client ipc-server
 
