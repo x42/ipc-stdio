@@ -257,7 +257,7 @@ terminate ()
 	 */
 
 	if (pid) {
-		fprintf (stderr, "Process is still running! trying SIGKILL\n");
+		fprintf (stderr, "Process is still running! Trying SIGKILL\n");
 		kill (pid, SIGKILL);
 	}
 
@@ -374,7 +374,7 @@ doit ()
 
 	while (true) {
 		if (terminated) {
-			fprintf (stderr, "Child app rerminated\n");
+			fprintf (stderr, "Child app terminated\n");
 			break;
 		}
 		ssize_t          rv;
